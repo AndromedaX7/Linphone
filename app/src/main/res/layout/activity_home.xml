@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:background="#dddddd"
+        />
+
+    <org.linphone.widgets.AlphaIndicator
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <org.linphone.widgets.AlphaView
+            android:id="@+id/av_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:av_tabIconNormal="@drawable/main_dial"
+            app:av_tabIconSelected="@drawable/main_dial_pressed"
+            app:av_tabText="拨号"
+            app:av_tabTextSize="12sp"
+            app:av_textColorNormal="#999999"
+            app:av_textColorSelected="@color/colorAccent" />
+
+
+        <org.linphone.widgets.AlphaView
+            android:id="@+id/av_mine"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:av_tabIconNormal="@drawable/me_default"
+            app:av_tabIconSelected="@drawable/me_pressed"
+            app:av_tabText="我的"
+            app:av_tabTextSize="14sp"
+            app:av_textColorNormal="#999999"
+            app:av_textColorSelected="@color/colorAccent" />
+    </org.linphone.widgets.AlphaIndicator>
+
+</LinearLayout>

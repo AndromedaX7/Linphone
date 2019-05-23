@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false">
+
+    <RelativeLayout
+        android:id="@+id/slide_itemView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:tag="slide_flag">
+
+        <FrameLayout
+            android:id="@+id/slide_delete"
+            android:layout_width="100dp"
+            android:layout_height="56dp"
+            android:layout_toEndOf="@id/item_root"
+            android:clipChildren="false">
+
+            <TextView android:id="@+id/delete"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@android:color/white" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/item_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/mIcon"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:src="@mipmap/ic_launcher2" />
+
+                <LinearLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/mFriendName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="name"
+                        android:textColor="@color/colorTextColorDark"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/mContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="08:10"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/unReadCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:background="@drawable/msg_count"
+                        android:text="10"
+                        android:textColor="@android:color/white"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/unReadTip"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/msg_tip"
+                        android:textColor="@android:color/white"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f2f2f2"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

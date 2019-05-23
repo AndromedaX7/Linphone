@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/mTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputPassword"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goto_voip_setting" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/mPassword"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTitle"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_16"
+
+        android:layout_marginEnd="@dimen/dp_30"
+        android:background="@color/colorBg"
+        android:padding="@dimen/dp_4" />
+
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mPassword"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/mCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/sip_setting_edit_bg"
+            android:gravity="center"
+            android:padding="@dimen/dp_8"
+            android:text="@string/cancel" />
+
+        <View
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/mConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_btm_app"
+            android:gravity="center"
+            android:padding="@dimen/dp_8"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

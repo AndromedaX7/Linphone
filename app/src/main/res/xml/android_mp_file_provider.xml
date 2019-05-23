@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<paths>-->
+        <!--&lt;!&ndash;升级&ndash;&gt;-->
+        <!--<external-path name="mp_file" path="."/>-->
+        <!---->
+    <!--</paths>-->
+    <paths>
+        <files-path name="mp_file" path="."/>
+    </paths>
+</resources>

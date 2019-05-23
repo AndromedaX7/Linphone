@@ -1,0 +1,204 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBg">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:navigationIcon="@drawable/previous"
+            app:title="@string/dial_number_blocking"
+            app:titleTextColor="@android:color/white">
+        </android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:text="@string/dial_number_blocking"
+                android:textColor="@color/colorTextColorDark"
+                android:textSize="@dimen/sp_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:text="@string/number_blocking_description" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_blocking2"
+                android:textColor="@color/colorTextColorDark" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="end"
+                android:hint="@string/block_number_hint"
+                android:textColorHint="@color/colorTextColorHint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@android:color/white"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blocking_time"
+                android:textColor="@color/colorTextColorDark" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="end"
+
+                android:hint="@string/block_time_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@android:color/white"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blocking_duration"
+                android:textColor="@color/colorTextColorDark" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="end"
+                android:hint="@string/block_duration_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_30"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_count" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100次"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorOrange"
+                android:gravity="center"
+                android:padding="@dimen/dp_16"
+                android:text="@string/stop_call"
+                android:textColor="@android:color/white" />
+
+            <View
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorTextColorLight"
+                android:gravity="center"
+                android:padding="@dimen/dp_16"
+                android:text="@string/start_call"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <!--<TextView-->
+
+        <!--android:layout_width="@dimen/dp_334"-->
+        <!--android:layout_height="@dimen/dp_40"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="@dimen/dp_92"-->
+        <!--android:background="@color/colorTextColorLight"-->
+        <!--android:elevation="@dimen/dp_10"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/save"-->
+        <!--android:textColor="@android:color/white" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/dp_20">
+
+        <View
+            android:layout_width="@dimen/dp_47"
+            android:layout_height="@dimen/dp_1"
+            android:layout_gravity="center"
+            android:background="#999999" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_4_5"
+            android:paddingEnd="@dimen/dp_4_5"
+            android:text="@string/unitBelong"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_12" />
+
+        <View
+            android:layout_width="@dimen/dp_47"
+            android:layout_height="@dimen/dp_1"
+            android:layout_gravity="center"
+            android:background="#999999" />
+
+    </LinearLayout>
+
+</FrameLayout>

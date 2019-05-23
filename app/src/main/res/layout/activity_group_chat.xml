@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zhhl.voip.fragment.GroupChatFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="@dimen/dp_10"
+        android:translationZ="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/meBack"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_22"
+            android:padding="@dimen/dp_4"
+            android:src="@drawable/previous" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_toEndOf="@+id/meBack"
+            android:text="@string/friends"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/group_chat"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBg"
+        android:gravity="center"
+        android:padding="@dimen/dp_16">
+
+        <LinearLayout android:background="@android:color/white" android:padding="@dimen/dp_8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                android:src="@drawable/ic_search" />
+
+            <TextView
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ListView android:id="@+id/groupList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#fff">
+    </ListView>
+
+</LinearLayout>

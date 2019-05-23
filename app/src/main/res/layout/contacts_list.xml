@@ -1,0 +1,123 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/colorBg"
+	android:orientation="vertical"
+	tools:context="com.zhhl.voip.fragment.FriendsFragment">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/colorPrimaryDark"
+		android:elevation="@dimen/dp_10"
+		android:translationZ="@dimen/dp_10">
+
+		<TextView
+			android:id="@+id/mTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_gravity="center"
+			android:text="@string/my_friend"
+			android:textColor="@android:color/white"
+			android:textSize="@dimen/sp_18" />
+
+		<ImageView
+			android:id="@+id/mAddFriend"
+			android:layout_width="@dimen/dp_30"
+			android:layout_height="@dimen/dp_30"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="@dimen/dp_24"
+			android:padding="@dimen/dp_6"
+			android:src="@drawable/ic_add" />
+
+		<LinearLayout
+			android:id="@+id/finish_select"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="@dimen/dp_24"
+			android:visibility="gone">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/dp_8"
+				android:text="完成"
+				android:textColor="@android:color/white" />
+
+			<TextView
+				android:id="@+id/count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@android:color/white" />
+		</LinearLayout>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/colorBg"
+		android:gravity="center"
+		android:padding="@dimen/dp_16">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@android:color/white"
+			android:gravity="center"
+			android:padding="@dimen/dp_8">
+
+			<ImageView
+				android:layout_width="@dimen/dp_30"
+				android:layout_height="@dimen/dp_30"
+				android:src="@drawable/ic_search" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/dp_4"
+				android:text="@string/search" />
+		</LinearLayout>
+
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/mGroupChat"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		android:gravity="center_vertical">
+
+		<ImageView
+			android:id="@+id/mIcon"
+			android:layout_width="@dimen/dp_40"
+			android:layout_height="@dimen/dp_40"
+			android:layout_marginStart="@dimen/dp_24"
+			android:layout_marginTop="@dimen/dp_8"
+			android:layout_marginBottom="@dimen/dp_8"
+			android:src="@mipmap/ic_launcher_round" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dp_8"
+			android:text="@string/group_chat" />
+
+	</LinearLayout>
+
+	<ExpandableListView
+		android:id="@+id/friendList"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:divider="@null"
+		android:groupIndicator="@null">
+
+	</ExpandableListView>
+
+</LinearLayout>

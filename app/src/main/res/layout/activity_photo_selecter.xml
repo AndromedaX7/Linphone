@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="@dimen/dp_10"
+        android:translationZ="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/meBack"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_22"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:padding="@dimen/dp_4"
+            android:src="@drawable/previous" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_toEndOf="@+id/meBack"
+            android:layout_toRightOf="@+id/meBack"
+            android:text="取消"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/mOpenPhotos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="相册"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/mSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_alignParentRight="true"
+            android:text="发送"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/mOpenPhotos"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingStart="16dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:paddingEnd="16dp"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:text="相册"-->
+            <!--android:textColor="@color/colorPrimaryDark" />-->
+
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/mSend"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingStart="16dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:paddingEnd="16dp"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:text="发送"-->
+            <!--android:textColor="@color/colorPrimaryDark" />-->
+    <!--</LinearLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="3">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
