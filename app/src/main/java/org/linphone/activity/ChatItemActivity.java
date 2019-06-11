@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.NIMSDK;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -79,7 +80,6 @@ import butterknife.OnTouch;
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
-import static java.nio.file.Paths.get;
 import static org.linphone.ImClientProxy.meId;
 
 public class ChatItemActivity extends AppCompatActivity implements ReceiveFriendMessageTask {
@@ -366,11 +366,11 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
                         .setCallback(new RequestCallback<List<NimUserInfo>>() {
                             @Override
                             public void onSuccess(List<NimUserInfo> param) {
-                                if (NIMClient.getService(FriendService.class).isMyFriend(account)){
+                                if (NIMClient.getService(FriendService.class).isMyFriend(account)) {
                                     Friend friend = NIMClient.getService(FriendService.class).getFriendByAccount(account);
                                     Map<String, Object> extension = friend.getExtension();
-                                    if (extension==null) return;
-                                    Object o =extension .get("inBlackList");
+                                    if (extension == null) return;
+                                    Object o = extension.get("inBlackList");
                                     if (o != null) {
                                         if (o instanceof Boolean) {
                                             if ((boolean) o) {
@@ -859,6 +859,7 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        IMMessage itemContent = mAdapter.getItem(menuInfo.position);
         switch (item.getItemId()) {
             case 1:
 //                Toast.makeText(this, "target 1 >" + menuInfo.position, Toast.LENGTH_SHORT).show();
@@ -876,37 +877,42 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
                 }, 500);
                 break;
             case 3:
-                NIMClient.getService(MsgService.class)
-                        .revokeMessage(mAdapter.getItem(menuInfo.position))
-                        .setCallback(
-                                new RequestCallback<Void>() {
-                                    @Override
-                                    public void onSuccess(Void param) {
+                if (itemContent.getFromAccount().equals(App.app().getLoginData().getUsername())) {
+                    NIMClient.getService(MsgService.class)
+                            .revokeMessage(itemContent)
+                            .setCallback(
+                                    new RequestCallback<Void>() {
+                                        @Override
+                                        public void onSuccess(Void param) {
 
-                                    }
-
-                                    @Override
-                                    public void onFailed(int code) {
-                                        if (code == ResponseCode.RES_OVERDUE) {
-                                            // 发送时间超过2分钟的消息，不能被撤回
-                                            Toast.makeText(ChatItemActivity.this, "发送时间超过2分钟的消息，不能被撤回", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            // 其他错误code
-                                            Toast.makeText(ChatItemActivity.this, "撤回失败", Toast.LENGTH_SHORT).show();
                                         }
 
-                                    }
+                                        @Override
+                                        public void onFailed(int code) {
+                                            if (code == ResponseCode.RES_OVERDUE) {
+                                                // 发送时间超过2分钟的消息，不能被撤回
+                                                Toast.makeText(ChatItemActivity.this, "发送时间超过2分钟的消息，不能被撤回", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                // 其他错误code
+                                                Toast.makeText(ChatItemActivity.this, "撤回失败", Toast.LENGTH_SHORT).show();
+                                            }
 
-                                    @Override
-                                    public void onException(Throwable exception) {
-                                        exception.printStackTrace();
+                                        }
+
+                                        @Override
+                                        public void onException(Throwable exception) {
+                                            exception.printStackTrace();
+                                        }
                                     }
-                                }
-                        );
-                imMessageCache.clear();
-                mChatView.postDelayed(() -> {
-                    getChatList(false);
-                }, 500);
+                            );
+                    imMessageCache.clear();
+                    mChatView.postDelayed(() -> {
+                        getChatList(false);
+                    }, 500);
+                } else {
+                    Toast.makeText(this, "只能撤回自己发送的消息哦~", Toast.LENGTH_SHORT).show();
+                }
+
         }
 
         return true;

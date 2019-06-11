@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 
@@ -115,6 +116,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             vh = (ChildViewHolder) convertView.getTag();
         }
 
+        Glide.with(vh.mIcon).load(getChild(groupPosition, childPosition).getAvatar()).placeholder(R.mipmap.ic_launcher2).error(R.mipmap.ic_launcher2).into(vh.mIcon);
         vh.checkBox.setVisibility(flag ? View.VISIBLE : View.GONE);
         vh.group = groupPosition;
         vh.pos = childPosition;
@@ -124,11 +126,11 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             String alias = NIMClient.getService(FriendService.class).getFriendByAccount(getChild(groupPosition, childPosition).getAccount()).getAlias();
             if (TextUtils.isEmpty(alias)) {
                 vh.mName.setText(getChild(groupPosition, childPosition).getName());
-            }else {
+            } else {
                 vh.mName.setText(alias);
             }
-        }else
-        vh.mName.setText(getChild(groupPosition, childPosition).getName());
+        } else
+            vh.mName.setText(getChild(groupPosition, childPosition).getName());
 
         return convertView;
     }

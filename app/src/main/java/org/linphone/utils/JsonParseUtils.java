@@ -1,6 +1,8 @@
 package org.linphone.utils;
 
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 
 import org.json.JSONException;
@@ -55,6 +57,7 @@ public class JsonParseUtils {
 	}
 
 	public static String jsonToResult(String json, String msg) {
+		Log.e("json output", "jsonToResult: "+msg );
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 

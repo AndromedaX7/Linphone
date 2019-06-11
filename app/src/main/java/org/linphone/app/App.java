@@ -52,7 +52,6 @@ public class App extends NimApplication implements Application.ActivityLifecycle
 
     public void setLoginData(LoginDataBean loginData) {
         this.loginData = loginData;
-        this.loginData.setModelpower("1,2,3,4");
     }
 
     private static App app;

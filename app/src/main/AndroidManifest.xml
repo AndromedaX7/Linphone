@@ -44,8 +44,8 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" /> <!-- Needed for in-app purchase -->
     <uses-permission android:name="com.android.vending.BILLING" /> <!-- Needed for overlay widget -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -56,13 +56,14 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.BlackListDetails"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.UserNameModifyActivity"></activity>
+        <activity android:name=".activity.UserModifyActivity" />
+        <activity android:name=".activity.BlackListDetails" />
         <activity
             android:name=".activity.SelectedUsersActivity"
             android:screenOrientation="portrait" />
@@ -374,7 +375,6 @@
         <activity
             android:name=".activity.SystemMessageDetails"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.GroupChatActivity"
             android:screenOrientation="portrait" />
@@ -404,7 +404,3 @@
     </application>
 
 </manifest>
-
-    <!--TODO 拨号 DialerFragment.java--><!--TODO 好友 ContactsListFragment.java--><!--TODO 添加好友 FindFriendActivity.java--><!--TODO 创建群聊 没有跳页，只是显示checkbox ContactsListFragment.java--><!--TODO 聊天 HistoryListFragment.java--><!--TODO 我的 MineFragmentto.java--><!--TODO 群聊 GroupChatActivity.java--><!--TODO 验证消息 SystemMessageDetails.java--><!--TODO 黑名单 BlackListDetails.java--><!--TODO 对话窗口 ChatItemActivity.java--><!--TODO 好友的个人信息 UserInfoDetailsActivity.java--><!--TODO 群聊的信息页 TeamDetailsActivity.java--><!--TODO 修改群名称 EditorTeamNameActivity.java--><!--TODO 相册 PhotoSelector.java--><!--TODO 表情 IconsSelector.java-->
-
-

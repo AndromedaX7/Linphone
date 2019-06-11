@@ -33,7 +33,7 @@
 
             <ImageView
                 android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60" android:id="@+id/mIcon"
                 android:layout_marginLeft="@dimen/dp_30"
                 android:src="@drawable/ic_launcher" />
 

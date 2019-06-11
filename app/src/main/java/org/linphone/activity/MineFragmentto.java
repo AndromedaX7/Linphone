@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -71,6 +72,7 @@ public class MineFragmentto extends LazyLoadFragment {
         mUserName.setText(Config.getAppName(getActivity()));
         mAccount.setText(MyCookie.getString("account", "4089"));
         setListener();
+
     }
 
     @Override

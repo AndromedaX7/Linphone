@@ -132,7 +132,7 @@ public class DialerFragment extends Fragment {
         mOutPutWhere = (TextView) view.findViewById(R.id.mOutPutWhere);
         mAddress = (AddressText) view.findViewById(R.id.address);
         mAddress.setDialerFragment(this);
-        account = MyCookie.getString("account", "4089");
+        account = App.app().getLoginData().getUsername();
         mProgressDialogUtils = new DialogUtils(getActivity());
         //initSsh();
         EraseButton erase = (EraseButton) view.findViewById(R.id.erase);
@@ -276,7 +276,7 @@ public class DialerFragment extends Fragment {
         }
 
         try {
-            account = MyCookie.getString("account", "4089");
+            account = App.app().getLoginData().getUsername();
             String mDialSettingsTag = MyCookie.getString("mDialSettingsTag", "");
             String mDialSettingsText = MyCookie.getString("mDialSettingsText", "");
             String mOutPutWhereText = MyCookie.getString("mOutPutWhereText", "");
@@ -639,6 +639,7 @@ public class DialerFragment extends Fragment {
         WebServiceUtils.getPersonDeptNameTo("setting", finalPreData, new WebServiceUtils.CallBack() {
             @Override
             public void result(String result) {
+                android.util.Log.e(TAG, "result: ."+result );
                 mProgressDialogUtils.showProgressDialog(false);
                 if (JsonParseUtils.jsonToBoolean(result)) {
                     Toast.makeText(getActivity(), "设置成功,请拨打电话！", Toast.LENGTH_SHORT).show();

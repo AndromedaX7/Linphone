@@ -6,9 +6,9 @@ android {
         applicationId "org.linphone"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 36
+        versionCode 40
         multiDexEnabled true
-        versionName "1.0.36"
+        versionName "1.0.40"
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86"
         }

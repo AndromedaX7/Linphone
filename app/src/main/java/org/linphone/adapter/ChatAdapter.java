@@ -26,6 +26,8 @@ import com.netease.nimlib.sdk.msg.attachment.VideoAttachment;
 import com.netease.nimlib.sdk.msg.constant.MsgTypeEnum;
 import com.netease.nimlib.sdk.msg.constant.NotificationType;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import org.linphone.R;
 import org.linphone.activity.ImageDetailsActivity;
@@ -56,12 +58,21 @@ public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHold
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void bindView(ChatViewHolder vh, int position, IMMessage item) {
+
+        NimUserInfo userInfo = NIMClient.getService(UserService.class).getUserInfo(item.getFromAccount());
+//        if (who.equals(item.getFromAccount())){
+//            Glide.with(vh.me).load(userInfo.getAvatar()).placeholder(R.mipmap.ic_launcher2).error(R.mipmap.ic_launcher2).into(vh.me);
+//        }else {
+//            Glide.with(vh.iconOther).load(userInfo.getAvatar()).placeholder(R.mipmap.ic_launcher2).error(R.mipmap.ic_launcher2).into(vh.iconOther);
+//        }
+
         if (item.getMsgType()==MsgTypeEnum.tip){
             vh.itemView.setVisibility(View.GONE);
         }else {
             vh.itemView.setVisibility(View.VISIBLE);
         }
         vh.setIMMessage(item);
+
         vh.time.setText(DateUtil.format("yyyy-MM-dd HH:mm:ss", item.getTime()));
         vh.message.setText(item.getContent());
         vh.speak.setTag(position);

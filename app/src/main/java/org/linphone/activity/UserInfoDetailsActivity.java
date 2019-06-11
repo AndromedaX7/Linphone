@@ -181,7 +181,9 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.delete)
     void deleteFriend() {
-        if (friend)
+        if (friend) {
+            NIMClient.getService(MsgService.class).clearChattingHistory(userAccount, SessionTypeEnum.P2P);
+            ChatItemActivity.imMessageCache.clear();
             NIMClient.getService(FriendService.class).deleteFriend(userAccount)
                     .setCallback(new RequestCallback<Void>() {
                         @Override
@@ -203,7 +205,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
                         }
                     });
-        else {
+        } else {
             AddFriendData data = new AddFriendData(userAccount, VerifyType.VERIFY_REQUEST);
             NIMClient.getService(FriendService.class).addFriend(data)
                     .setCallback(new RequestCallback<Void>() {

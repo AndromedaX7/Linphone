@@ -11,16 +11,22 @@ import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -37,6 +43,10 @@ import org.linphone.webservice.Config;
 import org.linphone.webservice.HttpWebServer;
 import org.linphone.webservice.MyCallBack;
 import org.xutils.common.Callback;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 import static android.content.Intent.ACTION_MAIN;
 
@@ -55,6 +65,7 @@ public class MineFragment extends Fragment {
     LinearLayout mUserInfo;
     TextView mUserName;
     TextView mVersionName;
+    ImageView mIcon;
 
     private DialogUtils mProgressDialogUtils;
     private AlertDialog dialog;
@@ -63,6 +74,8 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+
+        mIcon=view.findViewById(R.id.mIcon);
         mAccount = view.findViewById(R.id.mAccount);
         mAbout = view.findViewById(R.id.mAbout);
         mDialBlock = view.findViewById(R.id.mDialBlock);
@@ -73,8 +86,7 @@ public class MineFragment extends Fragment {
         mVersionName = view.findViewById(R.id.mVersionName);
         mProgressDialogUtils = new DialogUtils(getActivity());
         mVersionName.setText(Config.getVerName(getActivity()));
-        mUserName.setText(Config.getAppName(getActivity()));
-        mAccount.setText(MyCookie.getString("account", "4089"));
+
         if (App.app().getLoginData() != null) {
             mAccount.setText(App.app().getLoginData().getUsername());
             mUserName.setText(App.app().getLoginData().getName());
@@ -94,11 +106,39 @@ public class MineFragment extends Fragment {
             }
         }
 
-
         setListener();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        NimUserInfo userInfo = NIMClient.getService(UserService.class).getUserInfo(App.app().getLoginData().getUsername());
+        mUserName.setText(userInfo.getName());
+        mAccount.setText(userInfo.getAccount());
+        Glide.with(mIcon).load(userInfo.getAvatar()).error(R.mipmap.ic_launcher2).placeholder(R.mipmap.ic_launcher2).into(mIcon);
+        NIMClient.getService(UserService.class).fetchUserInfo(Arrays.asList(App.app().getLoginData().getUsername()))
+                .setCallback(new RequestCallback<List<NimUserInfo>>() {
+                    @Override
+                    public void onSuccess(List<NimUserInfo> param) {
+                        NimUserInfo nimUserInfo = param.get(0);
+                        mUserName.setText(nimUserInfo.getName());
+                        mAccount.setText(nimUserInfo.getAccount());
+                        Glide.with(mIcon).load(nimUserInfo.getAvatar()).error(R.mipmap.ic_launcher2).placeholder(R.mipmap.ic_launcher2).into(mIcon);
+                    }
+
+                    @Override
+                    public void onFailed(int code) {
+
+                    }
+
+                    @Override
+                    public void onException(Throwable exception) {
+
+                    }
+                });
+        Log.e("MineFragment", "MineFragment: "  );
+    }
 
     private void setListener() {
         mAbout.setOnClickListener(new View.OnClickListener() {
@@ -160,10 +200,14 @@ public class MineFragment extends Fragment {
         mUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//               openCallback.open(UserInfoFragment.class, false);
+
+                Intent intent =new Intent(getContext(),UserModifyActivity.class);
+                startActivity(intent);
             }
         });
     }
+
+
 
     private AlertDialog dialogExit;
 

@@ -137,6 +137,7 @@ public class ContactsListFragment extends Fragment implements DataCallbackInterf
 
 
 
+
     private void parseData(List<NimUserInfo> userFriend) {
         ArrayList<NimUserInfo> cache = new ArrayList<>(userFriend);
         Iterator<NimUserInfo> iterator = cache.iterator();
@@ -253,6 +254,7 @@ public class ContactsListFragment extends Fragment implements DataCallbackInterf
         for (int i = 0; i < adapter.getGroupCount(); i++)
             friendList.expandGroup(i);
         new Handler().postDelayed(this::getUserData, 1000);
+        adapter.cleanFlag();
     }
 
     @OnClick(R.id.mGroupChat)
@@ -323,12 +325,6 @@ public class ContactsListFragment extends Fragment implements DataCallbackInterf
     public void unregisterComplete() {
 
     }
-
-//    @Override
-//    public void callback(Bundle bundle) {
-//        count.setText(bundle.getString("data-check-count"));
-//    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

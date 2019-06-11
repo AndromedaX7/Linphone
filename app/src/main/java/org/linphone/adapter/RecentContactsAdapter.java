@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.NIMSDK;
 import com.netease.nimlib.sdk.friend.FriendService;
@@ -62,6 +64,7 @@ public class RecentContactsAdapter extends RecyclerView.Adapter<RecentContactsAd
                 viewHolder.mContent.setText(item.getContent());
                 int c = NIMSDK.getMsgService().queryRecentContact(userInfo.getAccount(), SessionTypeEnum.P2P).getUnreadCount();
 
+                Glide.with(viewHolder.mIcon).load(userInfo.getAvatar()).error(R.mipmap.ic_launcher2).placeholder(R.mipmap.ic_launcher2).into(viewHolder.mIcon);
                 viewHolder.unReadCount.setVisibility(c > 0 ? View.VISIBLE : View.GONE);
                 viewHolder.unReadCount.setText(String.valueOf(c));
                 break;
@@ -210,6 +213,8 @@ public class RecentContactsAdapter extends RecyclerView.Adapter<RecentContactsAd
         TextView delete;
         @BindView(R.id.slide_itemView)
         RelativeLayout slide_itemView;
+        @BindView(R.id.mIcon)
+        ImageView mIcon;
 
         @OnClick(R.id.delete)
         void onDeleteCall() {
