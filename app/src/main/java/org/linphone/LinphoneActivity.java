@@ -77,6 +77,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -152,6 +153,7 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
     private boolean doNotGoToCallActivity = false;
     private List<String> sideMenuItems;
     private boolean callTransfer = false;
+    private int audio_permission=0x12;
 
     public static final boolean isInstanciated() {
         return instance != null;
@@ -211,6 +213,9 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
         }
 
         setContentView(R.layout.mainto);
+
+
+
 
         ////
 
@@ -336,6 +341,8 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
                 }
             }
         }
+
+
     }
 
     private void initButtons() {

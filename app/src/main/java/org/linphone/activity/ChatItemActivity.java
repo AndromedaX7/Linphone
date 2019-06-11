@@ -35,7 +35,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.NIMSDK;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -84,11 +83,12 @@ import static org.linphone.ImClientProxy.meId;
 
 public class ChatItemActivity extends AppCompatActivity implements ReceiveFriendMessageTask {
 
-    private static final int audio_permission = 0x10;
+    private static final int audio_permission = 0x14;
     private static final int camera_video_permission = 0x11;
     private static final int camera_capture_permission = 0x12;
-    private static final int REQUEST_CODE_RECORD_VIDEO = 12;
-    private static final int REQUEST_IMAGE_CAPTURE = 13;
+    private static final int sd_card_permission = 0x13;
+    private static final int REQUEST_CODE_RECORD_VIDEO = 20;
+    private static final int REQUEST_IMAGE_CAPTURE = 21;
 
     private static ChatItemActivity sCurrent = null;
     @BindView(R.id.speak)
@@ -175,12 +175,16 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
     }
 
     private void initPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT)
-                this.requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                        audio_permission);
+                this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        sd_card_permission);
         }
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT)
+                this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        sd_card_permission);
+        }
     }
 
 
@@ -551,6 +555,11 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
             speakOut.setVisibility(View.VISIBLE);
             speak.setImageResource(R.drawable.ic_key_board);
             imm.hideSoftInputFromWindow(mMessage.getWindowToken(), 0);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT)
+                    this.requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                            audio_permission);
+            }
         } else {
             textOut.setVisibility(View.VISIBLE);
             speakOut.setVisibility(View.INVISIBLE);
@@ -790,17 +799,34 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == camera_video_permission && permissions[0].equals(Manifest.permission.CAMERA) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            videoRecord();
-        } else {
-            Toast.makeText(this, "拍摄视频权限不足,请前往系统设置开启", Toast.LENGTH_SHORT).show();
+
+        switch (requestCode) {
+            case camera_video_permission: {
+                if (permissions[0].equals(Manifest.permission.CAMERA) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    videoRecord();
+                } else {
+                    Toast.makeText(this, "拍摄视频权限不足,请前往系统设置开启", Toast.LENGTH_SHORT).show();
+                }
+            }
+            break;
+            case camera_capture_permission: {
+                if (permissions[0].equals(Manifest.permission.CAMERA) && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    takePhoto();
+                else {
+                    Toast.makeText(this, "拍照权限不足,请前往系统设置开启", Toast.LENGTH_SHORT).show();
+                }
+            }
+            break;
+//            case audio_permission: {
+//                if (permissions[0].equals(Manifest.permission.RECORD_AUDIO) && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+//                    Toast.makeText(this, "录音权限不足,请前往系统设置开启", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            break;
+
         }
 
-        if (requestCode == camera_capture_permission && permissions[0].equals(Manifest.permission.CAMERA) && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            takePhoto();
-        else {
-            Toast.makeText(this, "拍照权限不足,请前往系统设置开启", Toast.LENGTH_SHORT).show();
-        }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

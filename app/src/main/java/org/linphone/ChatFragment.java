@@ -138,6 +138,8 @@ public class ChatFragment extends Fragment implements OnClickListener, LinphoneC
 	private ByteArrayInputStream mUploadingImageStream;
 	private boolean newChatConversation = false;
 
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -155,6 +157,8 @@ public class ChatFragment extends Fragment implements OnClickListener, LinphoneC
 			//Retrieve parameter from intent
 			sipUri = getArguments().getString("SipUri");
 		}
+
+
 
 		//Initialize UI
 		defaultBitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.chat_picture_over);
