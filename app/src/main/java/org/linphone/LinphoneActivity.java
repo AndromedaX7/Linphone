@@ -214,12 +214,6 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
 
         setContentView(R.layout.mainto);
 
-
-
-
-        ////
-
-
         instance = this;
         fragmentsHistory = new ArrayList<FragmentsAvailable>();
         pendingFragmentTransaction = FragmentsAvailable.UNKNOW;

@@ -482,13 +482,16 @@ public class ChatItemActivity extends AppCompatActivity implements ReceiveFriend
             if (fromAccount.equals(targetId)) {
                 NIMSDK.getMsgService().clearUnreadCount(targetId, isP2P ? SessionTypeEnum.P2P : SessionTypeEnum.Team);
             }
-
             accountMsg.add(message);
+
+
         }
         if (targetId != null)
             mAdapter.setData(imMessageCache.get(targetId));
         mChatView.setSelection(mAdapter.getCount() - 1);
     }
+
+
 
 
     public static HashMap<String, ArrayList<IMMessage>> imMessageCache = new HashMap<>();

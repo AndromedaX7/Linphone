@@ -36,6 +36,8 @@ import org.linphone.cache.CacheManager;
 import org.linphone.utils.DateUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -270,6 +272,26 @@ public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHold
         who = account;
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public void setData(ArrayList<IMMessage> data) {
+        super.setData(data);
+    }
+//    private  ArrayList<IMMessage>  sortRecord(ArrayList<IMMessage> accountMsg) {
+
+//        ArrayList<IMMessage> src =new ArrayList<>(accountMsg);
+//        for (int i = 0; i < src.size(); i++) {
+//            for (int j = i+1; j <src.size();j++) {
+//                if (src.get(i).getTime()>src.get(j).getTime()){
+//                    IMMessage imMessage=   src.get(i);
+//                    src.set(i,src.get(j));
+//                    src.set(j,imMessage);
+//                }
+//            }
+//        }
+//        return  src;
+//    }
 
 
     public void isTeam(boolean team) {
