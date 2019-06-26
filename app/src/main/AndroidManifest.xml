@@ -61,7 +61,8 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.UserNameModifyActivity"></activity>
+        <activity android:name=".activity.TextSizeSettingsActivity"></activity>
+        <activity android:name=".activity.UserNameModifyActivity" />
         <activity android:name=".activity.UserModifyActivity" />
         <activity android:name=".activity.BlackListDetails" />
         <activity

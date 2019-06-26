@@ -61,6 +61,7 @@ public class MineFragment extends Fragment {
     LinearLayout mAbout;
     LinearLayout mDialBlock;
     LinearLayout mSettings;
+    LinearLayout mTextSizeSettings;
     TextView mExit;
     LinearLayout mUserInfo;
     TextView mUserName;
@@ -80,6 +81,7 @@ public class MineFragment extends Fragment {
         mAbout = view.findViewById(R.id.mAbout);
         mDialBlock = view.findViewById(R.id.mDialBlock);
         mSettings = view.findViewById(R.id.mSettings);
+        mTextSizeSettings = view.findViewById(R.id.mTextSettings);
         mExit = view.findViewById(R.id.mExit);
         mUserInfo = view.findViewById(R.id.mUserInfo);
         mUserName = view.findViewById(R.id.mUserName);
@@ -171,6 +173,10 @@ public class MineFragment extends Fragment {
 //                    startSipSettings();
 //                }
             }
+        });
+
+        mTextSizeSettings.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(),TextSizeSettingsActivity.class));
         });
         mExit.setOnClickListener(new View.OnClickListener() {
             @Override

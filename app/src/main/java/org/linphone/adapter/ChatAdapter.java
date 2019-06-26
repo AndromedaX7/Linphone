@@ -37,14 +37,13 @@ import org.linphone.utils.DateUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHolder> implements View.OnClickListener {
 
-
+    private int textSize = 18;
     private String who;
     private boolean isTeam;
 
@@ -60,6 +59,11 @@ public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHold
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void bindView(ChatViewHolder vh, int position, IMMessage item) {
+        NimUserInfo me = NIMClient.getService(UserService.class).getUserInfo(who);
+        if (me.getExtensionMap().containsKey("chat_text_size")) {
+            textSize = (int) me.getExtensionMap().get("chat_text_size");
+        }
+        vh.message.setTextSize(textSize);
 
         NimUserInfo userInfo = NIMClient.getService(UserService.class).getUserInfo(item.getFromAccount());
 //        if (who.equals(item.getFromAccount())){
@@ -68,13 +72,12 @@ public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHold
 //            Glide.with(vh.iconOther).load(userInfo.getAvatar()).placeholder(R.mipmap.ic_launcher2).error(R.mipmap.ic_launcher2).into(vh.iconOther);
 //        }
 
-        if (item.getMsgType()==MsgTypeEnum.tip){
+        if (item.getMsgType() == MsgTypeEnum.tip) {
             vh.itemView.setVisibility(View.GONE);
-        }else {
+        } else {
             vh.itemView.setVisibility(View.VISIBLE);
         }
         vh.setIMMessage(item);
-
         vh.time.setText(DateUtil.format("yyyy-MM-dd HH:mm:ss", item.getTime()));
         vh.message.setText(item.getContent());
         vh.speak.setTag(position);
@@ -108,7 +111,7 @@ public class ChatAdapter extends BaseAdapter<IMMessage, ChatAdapter.ChatViewHold
             vh.name.setGravity(!who.equals(item.getFromAccount()) ? Gravity.START : Gravity.END);
 
         } else {
-            vh.name.setVisibility(View.INVISIBLE);
+            vh.name.setVisibility(View.GONE);
         }
         switch (item.getMsgType()) {
             case tip:

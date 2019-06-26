@@ -181,7 +181,34 @@
                 android:layout_marginLeft="@dimen/dp_8"
                 android:src="@drawable/ic_next" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mTextSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_1"
+            android:background="@android:color/white"
+            android:elevation="@dimen/dp_10"
+            android:padding="@dimen/dp_16"
+            android:translationZ="@dimen/dp_2">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="字体大小" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_gravity="end"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:src="@drawable/ic_next" />
+        </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
