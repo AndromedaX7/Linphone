@@ -39,7 +39,11 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import org.linphone.ImClientProxy;
 import org.linphone.LinphoneActivity;
@@ -81,6 +85,8 @@ import org.xutils.x;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -176,6 +182,16 @@ public class LoginDemoActivity extends Activity implements ActivityCompat.OnRequ
                             if (loginData != null) {
                                 App.app().setLoginData(loginData);
                                 String account_name = MyCookie.getString("account", "0000");
+
+                                NimUserInfo userInfo = NIMClient.getService(UserService.class).getUserInfo(App.app().getLoginData().getUsername());
+                                Map m = userInfo.getExtensionMap();
+                                if (m==null) {
+                                    HashMap<UserInfoFieldEnum, Object> maps = new HashMap<>();
+                                    HashMap<String, Object> map = new HashMap<>();
+                                    map.put("chat_text_size", 18);
+                                    maps.put(UserInfoFieldEnum.EXTEND, map);
+                                    NIMClient.getService(UserService.class).updateUserInfo(maps).setCallback(null);
+                                }
                                 if (account_name.equals(mAccount.getText().toString())) {
                                     startActivity(new Intent().setClass(LoginDemoActivity.this, LinphoneActivity.class).setData(getIntent().getData()));
                                     finish();

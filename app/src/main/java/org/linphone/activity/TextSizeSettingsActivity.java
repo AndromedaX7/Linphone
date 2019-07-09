@@ -19,6 +19,7 @@ import org.linphone.app.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,16 +57,19 @@ public class TextSizeSettingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         adapter = new TextChangeAdapter();
         NimUserInfo userInfo = NIMClient.getService(UserService.class).getUserInfo(App.app().getLoginData().getUsername());
-        if (userInfo.getExtensionMap().containsKey("chat_text_size")) {
-            int chat_text_size = (int) userInfo.getExtensionMap().get("chat_text_size");
-            adapter.setTextSize(chat_text_size);
-            for (int i = 0; i < textSizes.length; i++) {
-                if (textSizes[i] == chat_text_size) {
-                    seek.setProgress(i);
-                    textSize.setText(name[i]);
+        Map m = userInfo.getExtensionMap();
+        if (m !=null) {
+            if (m.containsKey("chat_text_size")) {
+                int chat_text_size = (int) userInfo.getExtensionMap().get("chat_text_size");
+                adapter.setTextSize(chat_text_size);
+                for (int i = 0; i < textSizes.length; i++) {
+                    if (textSizes[i] == chat_text_size) {
+                        seek.setProgress(i);
+                        textSize.setText(name[i]);
+                    }
                 }
             }
-        } else {
+        } else{
             adapter.setTextSize(18);
             seek.setProgress(1);
             textSize.setText(name[1]);
