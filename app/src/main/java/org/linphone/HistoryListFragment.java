@@ -309,7 +309,7 @@ public class HistoryListFragment extends Fragment implements ReceiveSystemMessag
     @Override
     public void onReceive(List<IMMessage> msg) {
         Log.e(TAG, "onReceive: ");
-        ChatItemActivity.addRecord(msg);
+//        ChatItemActivity.addRecord(msg);
 //        getRecentContacts();
         for (int i = 0; i < msg.size(); i++) {
             if (msg.get(i).getSessionType() == SessionTypeEnum.P2P)

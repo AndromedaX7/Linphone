@@ -109,9 +109,6 @@ public class MessageReceiverService extends Service {
             }
 
             channelID = sound.getId();
-            if (TextUtils.equals(oldID,channelID)){
-                return;
-            }
             channel = new NotificationChannel(channelID, channelID, NotificationManager.IMPORTANCE_HIGH);
             channel.setSound(Uri.parse(sound.getLocation()), null);
             manager.createNotificationChannel(channel);

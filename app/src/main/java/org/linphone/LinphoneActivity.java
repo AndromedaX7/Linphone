@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.linphone.LinphoneManager.AddressType;
+import org.linphone.activity.ChatItemActivity;
 import org.linphone.activity.MineFragment;
 import org.linphone.activity.PhoneFragment;
 import org.linphone.app.App;
@@ -54,6 +55,11 @@ import org.linphone.core.LinphoneCoreListenerBase;
 import org.linphone.core.LinphoneProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.mediastream.Log;
+import org.linphone.ob.ObserverManager;
+import org.linphone.ob.ReceiveFriendMessageTask;
+import org.linphone.ob.ReceiveSystemMessageTask;
+import org.linphone.ob.ReceiveTextMessage;
+import org.linphone.ob.TaskListener;
 import org.linphone.purchase.InAppPurchaseActivity;
 import org.linphone.ui.AddressText;
 import org.linphone.update.NotificationInfo;
@@ -110,10 +116,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.msg.model.SystemMessage;
+
 /**
  * @author Sylvain
  */
-public class LinphoneActivity extends AppCompatActivity implements OnClickListener, ContactPicked, ActivityCompat.OnRequestPermissionsResultCallback {
+public class LinphoneActivity extends AppCompatActivity implements OnClickListener, ContactPicked, ActivityCompat.OnRequestPermissionsResultCallback
+            , ReceiveFriendMessageTask {
     public static final String PREF_FIRST_LAUNCH = "pref_first_launch";
     private static final int SETTINGS_ACTIVITY = 123;
     private static final int CALL_ACTIVITY = 19;
@@ -336,6 +346,7 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
             }
         }
 
+         ObserverManager.getInstance().register(TaskListener.RECEIVE_FRIEND_MESSAGE, this);
 
     }
 
@@ -1096,6 +1107,22 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
 
     private int mAlwaysChangingPhoneAngle = -1;
 
+    @Override
+    public void onReceive(List<IMMessage> msg) {
+        ChatItemActivity.addRecord(msg);
+    }
+
+
+    @Override
+    public void registerComplete() {
+
+    }
+
+    @Override
+    public void unregisterComplete() {
+
+    }
+
     private class LocalOrientationEventListener extends OrientationEventListener {
         public LocalOrientationEventListener(Context context) {
             super(context);
@@ -1523,7 +1550,7 @@ public class LinphoneActivity extends AppCompatActivity implements OnClickListen
 
         instance = null;
         super.onDestroy();
-
+        ObserverManager.getInstance().unregister(TaskListener.RECEIVE_FRIEND_MESSAGE, this);
         unbindDrawables(findViewById(R.id.topLayout));
         System.gc();
     }
