@@ -68,6 +68,8 @@ public class MineFragment extends Fragment {
     TextView mVersionName;
     ImageView mIcon;
 
+    private LinearLayout sound;
+
     private DialogUtils mProgressDialogUtils;
     private AlertDialog dialog;
     private AlertDialog pro;
@@ -82,6 +84,7 @@ public class MineFragment extends Fragment {
         mDialBlock = view.findViewById(R.id.mDialBlock);
         mSettings = view.findViewById(R.id.mSettings);
         mTextSizeSettings = view.findViewById(R.id.mTextSettings);
+        sound = view.findViewById(R.id.sound);
         mExit = view.findViewById(R.id.mExit);
         mUserInfo = view.findViewById(R.id.mUserInfo);
         mUserName = view.findViewById(R.id.mUserName);
@@ -178,6 +181,14 @@ public class MineFragment extends Fragment {
         mTextSizeSettings.setOnClickListener(v -> {
             startActivity(new Intent(getContext(),TextSizeSettingsActivity.class));
         });
+
+        sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),SoundSettingActivity.class));
+            }
+        });
+
         mExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

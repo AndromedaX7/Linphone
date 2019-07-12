@@ -4,7 +4,7 @@
     package="org.linphone">
     <!-- Permissions for Push Notification -->
     <permission
-        android:name="com.lituo.linphone.permission.C2D_MESSAGE"
+        android:name="org.linphone.permission.C2D_MESSAGE"
         android:protectionLevel="signature" /> <!-- Change package ! -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.lituo.linphone.permission.C2D_MESSAGE" /> <!-- Change package ! -->
@@ -65,6 +65,7 @@
         <activity android:name=".activity.UserNameModifyActivity" />
         <activity android:name=".activity.UserModifyActivity" />
         <activity android:name=".activity.BlackListDetails" />
+        <activity android:name=".activity.SoundSettingActivity" />
         <activity
             android:name=".activity.SelectedUsersActivity"
             android:screenOrientation="portrait" />

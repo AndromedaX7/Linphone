@@ -16,6 +16,7 @@ import android.util.Log;
 import org.linphone.LinphoneService;
 import org.linphone.RunningService;
 import org.linphone.bean.LoginDataBean;
+import org.linphone.utils.ShareHelper;
 import org.xutils.x;
 
 
@@ -44,6 +45,7 @@ public class App extends NimApplication implements Application.ActivityLifecycle
 //            core.registerObserver(true);
 //        }
 //        initLinphone();
+        ShareHelper.init(getApplicationContext());
     }
 
     public LoginDataBean getLoginData() {

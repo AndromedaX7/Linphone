@@ -1,17 +1,26 @@
 package org.linphone.service;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.service.notification.StatusBarNotification;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.NIMSDK;
 import com.netease.nimlib.sdk.Observer;
@@ -43,8 +52,11 @@ import org.linphone.R;
 import org.linphone.activity.ChatItemActivity;
 import org.linphone.activity.SystemMessageDetails;
 import org.linphone.app.App;
+import org.linphone.bean.Sound;
 import org.linphone.ob.ObserverManager;
+import org.linphone.utils.ShareHelper;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -56,21 +68,63 @@ public class MessageReceiverService extends Service {
 
     private int requestId = 20153489;
 
+    private String channelID;
+    private ShareHelper shareHelper;
+
+    private SoundSettingReceiver receiver;
+    private IntentFilter intentFilter;
+
     @Override
     public void onCreate() {
         super.onCreate();
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel("channel-im", "channel-im", NotificationManager.IMPORTANCE_HIGH);
-            manager.createNotificationChannel(channel);
-        }
+        shareHelper = ShareHelper.getInstance();
+        setChannel();
         registerObserver(true);
+
+        receiver = new SoundSettingReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("org.linphone.SOUND_SETTING");
+        registerReceiver(receiver,intentFilter);
+
+    }
+
+    /**
+     * 更新提示声音设置
+     */
+    private void setChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String soundSetting = (String) shareHelper.query("soundSettingNew", "");
+            Sound sound;
+            String oldID = "";
+            if (TextUtils.isEmpty(soundSetting)) {
+                sound = new Sound();
+                sound.setId("channel-im1");
+                sound.setLocation("msg1");
+
+            } else {
+                sound = new Gson().fromJson(soundSetting, (Type) Sound.class);
+                oldID = (String) shareHelper.query("soundSettingOld","");
+                manager.deleteNotificationChannel(oldID);
+            }
+
+            channelID = sound.getId();
+            if (TextUtils.equals(oldID,channelID)){
+                return;
+            }
+            channel = new NotificationChannel(channelID, channelID, NotificationManager.IMPORTANCE_HIGH);
+            channel.setSound(Uri.parse(sound.getLocation()), null);
+            manager.createNotificationChannel(channel);
+            shareHelper.save("soundSettingOld", sound.getId()).commit();
+        }
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         registerObserver(false);
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -101,7 +155,7 @@ public class MessageReceiverService extends Service {
                                 NIMClient.getService(FriendService.class).updateFriendFields(target.getSessionId(), map).setCallback(new RequestCallback<Void>() {
                                     @Override
                                     public void onSuccess(Void param) {
-                                        Log.e("update", "onSuccess: "  );
+                                        Log.e("update", "onSuccess: ");
                                     }
 
                                     @Override
@@ -124,23 +178,21 @@ public class MessageReceiverService extends Service {
                         } else if (!NIMSDK.getFriendService().isMyFriend(target.getSessionId())) {
                             iterable.remove();
                         } else {
-                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, "channel-im");
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, channelID);
                             builder.setSmallIcon(R.mipmap.ic_launcher2);
                             builder.setContentIntent(makeActivityReStart(target.getSessionId(), true, true, requestId));
 //                            builder.setContentText("您有一条新短消息");
-                            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                            builder.setVibrate(new long[]{0,1000,1000,1000});
+                            builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                             builder.setAutoCancel(true);
                             builder.setContentText("来自用户:" + target.getFromNick());
                             manager.notify(requestId, builder.build());
                         }
                     } else {
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, "channel-im");
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, channelID);
                         builder.setSmallIcon(R.mipmap.ic_launcher2);
 //                        builder.setContentText("您有一条新短消息");
                         builder.setContentText("群消息");
-                        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                        builder.setVibrate(new long[]{0,1000,1000,1000});
+                        builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                         builder.setAutoCancel(true);
                         builder.setContentIntent(makeActivityReStart(target.getSessionId(), false, true, requestId));
                         manager.notify(requestId, builder.build());
@@ -191,13 +243,12 @@ public class MessageReceiverService extends Service {
                 ObserverManager.getInstance().notifyReceiveSystemMessage(message);
                 if (message.getType() == SystemMessageType.AddFriend) {
                     App.newRecord = true;
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, "channel-im");
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MessageReceiverService.this, channelID);
                     builder.setSmallIcon(R.mipmap.ic_launcher2);
 //                    builder.setContentText("您有一条新短消息");
                     builder.setContentText("验证消息");
                     builder.setAutoCancel(true);
-                    builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                    builder.setVibrate(new long[]{0,1000,1000,1000});
+                    builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                     builder.setContentIntent(makeActivityReStart("", false, false, requestId));
                     manager.notify(requestId, builder.build());
                 }
@@ -257,9 +308,9 @@ public class MessageReceiverService extends Service {
             @Override
             public void onEvent(RevokeMsgNotification revokeMsgNotification) {
                 ChatItemActivity current = ChatItemActivity.current();
-                if (current==null){
+                if (current == null) {
                     ChatItemActivity.imMessageCache.clear();
-                }else {
+                } else {
                     current.notifyRevoke();
                 }
             }
@@ -303,6 +354,18 @@ public class MessageReceiverService extends Service {
         taskStackBuilder.addNextIntent(result);
 
         return taskStackBuilder.getPendingIntent(requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+
+    /**
+     * 接收声音设置的广播
+     */
+    public class SoundSettingReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setChannel();
+        }
     }
 
 }
