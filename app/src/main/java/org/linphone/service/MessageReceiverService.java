@@ -88,14 +88,14 @@ public class MessageReceiverService extends Service {
         registerReceiver(receiver,intentFilter);
 
     }
-
+    private Sound sound;
     /**
      * 更新提示声音设置
      */
     private void setChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String soundSetting = (String) shareHelper.query("soundSettingNew", "");
-            Sound sound;
+
             String oldID = "";
             if (TextUtils.isEmpty(soundSetting)) {
                 sound = new Sound();
@@ -113,6 +113,9 @@ public class MessageReceiverService extends Service {
             channel.setSound(Uri.parse(sound.getLocation()), null);
             manager.createNotificationChannel(channel);
             shareHelper.save("soundSettingOld", sound.getId()).commit();
+        }else {
+            sound = new Sound();
+            sound.setLocation("msg1");
         }
 
     }
@@ -181,6 +184,7 @@ public class MessageReceiverService extends Service {
 //                            builder.setContentText("您有一条新短消息");
                             builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                             builder.setAutoCancel(true);
+                            builder.setSound(Uri.parse(sound.getLocation()));
                             builder.setContentText("来自用户:" + target.getFromNick());
                             manager.notify(requestId, builder.build());
                         }
@@ -191,6 +195,7 @@ public class MessageReceiverService extends Service {
                         builder.setContentText("群消息");
                         builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                         builder.setAutoCancel(true);
+                        builder.setSound(Uri.parse(sound.getLocation()));
                         builder.setContentIntent(makeActivityReStart(target.getSessionId(), false, true, requestId));
                         manager.notify(requestId, builder.build());
                     }
@@ -245,6 +250,7 @@ public class MessageReceiverService extends Service {
 //                    builder.setContentText("您有一条新短消息");
                     builder.setContentText("验证消息");
                     builder.setAutoCancel(true);
+                    builder.setSound(Uri.parse(sound.getLocation()));
                     builder.setVibrate(new long[]{0, 1000, 1000, 1000});
                     builder.setContentIntent(makeActivityReStart("", false, false, requestId));
                     manager.notify(requestId, builder.build());
